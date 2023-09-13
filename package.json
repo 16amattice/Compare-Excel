@@ -2,7 +2,7 @@
   "name": "compareexcelui",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "main.ts",
   "scripts": {
     "build:react": "webpack --mode development --config webpack.react.config.js",
     "build": "webpack --mode development",
