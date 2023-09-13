@@ -2,7 +2,7 @@
   "name": "compareexcelui",
   "version": "1.0.0",
   "description": "",
-  "main": "main.ts",
+  "main": "dist/main.js",
   "scripts": {
     "build:react": "webpack --mode development --config webpack.react.config.js",
     "build": "webpack --mode development",
@@ -17,6 +17,10 @@
   "build": {
     "appId": "com.yourcompanyname.compareexcelui",
     "productName": "CompareExcelUI",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
     "directories": {
       "output": "release-builds"
     },
