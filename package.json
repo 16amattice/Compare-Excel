@@ -6,11 +6,35 @@
   "scripts": {
     "build:react": "webpack --mode development --config webpack.react.config.js",
     "build": "webpack --mode development",
-    "start": "electron ./dist/main.js"
+    "start": "electron ./dist/main.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "release": "electron-builder -p always"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "build": {
+    "appId": "com.yourcompanyname.compareexcelui",
+    "productName": "CompareExcelUI",
+    "directories": {
+      "output": "release-builds"
+    },
+    "publish": {
+      "provider": "github",
+      "releaseType": "draft",
+      "channel": "latest"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowElevation": false,
+      "createDesktopShortcut": true,
+      "perMachine": false
+    }
+  },
   "devDependencies": {
     "@babel/cli": "^7.22.15",
     "@babel/core": "^7.22.17",
