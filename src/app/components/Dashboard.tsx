@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:5001/api/comparison/upload', {
+      const response = await fetch('https://localhost:5001/api/comparison/upload', {
         method: 'POST',
         body: formData
       });
