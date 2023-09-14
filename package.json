@@ -1,6 +1,6 @@
 {
   "name": "compareexcel",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
@@ -24,6 +24,9 @@
     "directories": {
       "output": "release-builds"
     },
+    "extraResources": [
+      "./CompareExcelAPI/publish/**"
+    ],
     "publish": {
       "provider": "github",
       "releaseType": "draft",

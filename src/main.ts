@@ -4,6 +4,9 @@ const path = require("path");
 import { app, BrowserWindow, dialog } from "electron";
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
+const { spawn } = require('child_process');
+
+let backendProcess: { kill: () => void; };
 
 // Logging
 autoUpdater.logger = log;
@@ -65,10 +68,16 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 app.on("ready", () => {
+  const APIPath = path.join(__dirname, 'CompareExcelAPI', 'publish', 'CompareExcel.exe');
+  backendProcess = spawn(APIPath);
   createWindow();
   autoUpdater.checkForUpdatesAndNotify();
 });
 
 app.on('window-all-closed', () => {
   app.quit();
+});
+
+app.on('will-quit', () => {
+  backendProcess.kill();  // Ensure the backend stops when Electron quits
 });
