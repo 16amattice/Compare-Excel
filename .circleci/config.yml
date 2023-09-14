@@ -8,6 +8,9 @@ jobs:
     executor:
       name: win/default
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "bd:4e:ad:49:2d:56:b3:60:6f:ab:2a:09:bb:c4:4f:82"
       - checkout
       - run:
           name: Restore and Build Backend
