@@ -29,12 +29,11 @@ const createWindow = () => {
     window = null;
   });
 };
-function sendStatusToWindow(text: string) {
-  log.info(text);
-  window.webContents.send('message', text);
-}
+
+let updater: { enabled: boolean; }
+autoUpdater.autoDownload = false
+
 autoUpdater.on('update-available', (info: { version: any; }) => {
-  sendStatusToWindow(`Update v${info.version} available.`);
   dialog.showMessageBox({
     type: 'info',
     title: 'Update available',
@@ -43,20 +42,18 @@ autoUpdater.on('update-available', (info: { version: any; }) => {
   }).then(response => {
     if (response.response === 0) { // If the user clicks "Yes"
       autoUpdater.downloadUpdate();
+    }else{
+      updater.enabled = true
+      updater = null
     }
   });
 });
-autoUpdater.on('error', (err: string) => {
-  sendStatusToWindow('Error in auto-updater. ' + err);
-})
 autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; percent: string; transferred: string; total: string; }) => {
   let log_message = "Download speed: " + progressObj.bytesPerSecond;
   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
   log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
-  sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', () => {
-  sendStatusToWindow('Update downloaded. Installing...');
   dialog.showMessageBox({
     type: 'info',
     title: 'Update ready',
