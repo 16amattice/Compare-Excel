@@ -29,11 +29,11 @@ const Dashboard: React.FC = () => {
       </div>
       <div className="data-grid">
         {/* Placeholder for Data Grid of file 1 */}
-        <div className="data-grid-view">Please compare two files to populate grid.</div>
+        <div className="data-grid-view">Please compare two files to populate grid...</div>
       </div>
       <div className="data-grid">
         {/* Placeholder for Data Grid of file 2 */}
-        <div className="data-grid-view">Please compare two files to populate grid.</div>
+        <div className="data-grid-view">Please compare two files to populate grid...</div>
       </div>
     </div>
   );
