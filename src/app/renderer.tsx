@@ -1,5 +1,10 @@
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import * as React from 'react';
 import Dashboard from "./components/Dashboard";
 
-ReactDOM.render(<Dashboard />, document.getElementById('renderer'));
+const root = document.getElementById('renderer');
+if (root) {
+  const domRoot = createRoot(root);
+  domRoot.render(<Dashboard />);
+}
+
