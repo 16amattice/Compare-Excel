@@ -1,5 +1,5 @@
 {
-  "name": "compareexcelui",
+  "name": "compareexcel",
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
@@ -15,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "build": {
-    "appId": "com.yourcompanyname.compareexcelui",
-    "productName": "CompareExcelUI",
+    "appId": "com.16amattice.compareexcelui",
+    "productName": "Compare Excel",
     "files": [
       "dist/**/*",
       "node_modules/**/*"
@@ -64,6 +64,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "electron-updater": "^6.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }
