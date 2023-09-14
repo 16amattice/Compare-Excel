@@ -1,6 +1,6 @@
 {
   "name": "compareexcel",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
   "scripts": {
@@ -64,6 +64,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "electron-log": "^4.4.8",
     "electron-updater": "^6.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
