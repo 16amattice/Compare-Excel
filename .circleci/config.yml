@@ -4,6 +4,18 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
+  build-backend:
+    executor:
+      name: win/default
+    steps:
+      - checkout
+      - run:
+          name: Restore and Build Backend
+          command: |
+            cd CompareExcelAPI
+            dotnet restore
+            dotnet publish -c Release -r win10-x64 --self-contained false -o ./publish
+
   build:
     executor:
       name: win/default
@@ -12,6 +24,12 @@ jobs:
           fingerprints:
             - "bd:4e:ad:49:2d:56:b3:60:6f:ab:2a:09:bb:c4:4f:82"
       - checkout
+      - run:
+          name: Build Backend API
+          command: |
+            cd CompareExcelAPI
+            dotnet restore
+            dotnet publish -c Release -r win10-x64 --self-contained false -o ./publish
       - run:
           name: Install Dependencies
           command: npm install
@@ -27,6 +45,12 @@ jobs:
           fingerprints:
             - "bd:4e:ad:49:2d:56:b3:60:6f:ab:2a:09:bb:c4:4f:82"
       - checkout
+      - run:
+          name: Build Backend API
+          command: |
+            cd CompareExcelAPI
+            dotnet restore
+            dotnet publish -c Release -r win10-x64 --self-contained false -o ./publish
       - run:
           name: Install Dependencies
           command: npm install
@@ -47,11 +71,16 @@ workflows:
   version: 2
   build-and-release:
     jobs:
+      - build-backend
       - build:
+          requires:
+            - build-backend
           filters:
             branches:
               only: develop
       - release:
+          requires:
+            - build-backend
           filters:
             branches:
               only: master
