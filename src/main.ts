@@ -33,15 +33,19 @@ function sendStatusToWindow(text: string) {
   log.info(text);
   window.webContents.send('message', text);
 }
-autoUpdater.on('checking-for-update', () => {
-  sendStatusToWindow('Checking for update...');
-})
-autoUpdater.on('update-available', () => {
-  sendStatusToWindow('Update available.');
-})
-autoUpdater.on('update-not-available', () => {
-  sendStatusToWindow('Update not available.');
-})
+autoUpdater.on('update-available', (info: { version: any; }) => {
+  sendStatusToWindow(`Update v${info.version} available.`);
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Update available',
+    message: `A new version (${info.version}) is available. Do you want to download and install now?`,
+    buttons: ['Yes', 'No']
+  }).then(response => {
+    if (response.response === 0) { // If the user clicks "Yes"
+      autoUpdater.downloadUpdate();
+    }
+  });
+});
 autoUpdater.on('error', (err: string) => {
   sendStatusToWindow('Error in auto-updater. ' + err);
 })
@@ -52,7 +56,15 @@ autoUpdater.on('download-progress', (progressObj: { bytesPerSecond: string; perc
   sendStatusToWindow(log_message);
 })
 autoUpdater.on('update-downloaded', () => {
-  sendStatusToWindow('Update downloaded');
+  sendStatusToWindow('Update downloaded. Installing...');
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Update ready',
+    message: 'The update is ready to be installed. The application will now close and the update will be installed.',
+    buttons: ['OK']
+  }).then(() => {
+    autoUpdater.quitAndInstall();
+  });
 });
 
 app.on("ready", () => {
