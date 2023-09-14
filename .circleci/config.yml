@@ -4,25 +4,7 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  build-backend:
-    executor:
-      name: win/default
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "bd:4e:ad:49:2d:56:b3:60:6f:ab:2a:09:bb:c4:4f:82"
-      - checkout
-      - run:
-          name: Install .NET 6.0 SDK
-          command: choco install dotnet-sdk --version 6.0.100
-      - run:
-          name: Restore and Build Backend
-          command: |
-            cd CompareExcelAPI
-            dotnet restore
-            dotnet publish -c Release -r win10-x64 --self-contained false -o ./publish
-
-  build:
+  build-only:
     executor:
       name: win/default
     steps:
@@ -43,7 +25,7 @@ jobs:
           name: Build Application
           command: npm run dist
 
-  release:
+  build-and-release:
     executor:
       name: win/default
     steps:
@@ -78,18 +60,15 @@ jobs:
 
 workflows:
   version: 2
-  build-and-release:
+  build-only:
     jobs:
-      - build-backend
-      - build:
-          requires:
-            - build-backend
+      - build-only:
           filters:
             branches:
               only: develop
-      - release:
-          requires:
-            - build-backend
+  build-and-release:
+    jobs:
+      - build-and-release:
           filters:
             branches:
               only: master
