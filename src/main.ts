@@ -68,7 +68,15 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 app.on("ready", () => {
-  const APIPath = path.join(__dirname, 'CompareExcelAPI', 'publish', 'CompareExcel.exe');
+  let APIPath
+  if (app.isPackaged) {
+    // In production/package mode
+    APIPath = path.join(process.resourcesPath, 'CompareExcelAPI', 'publish', 'CompareExcel.exe');
+  } else {
+    // In development mode
+    APIPath = path.join(__dirname, '..', 'CompareExcelAPI', 'publish', 'CompareExcel.exe');
+    console.log('APIPath:', APIPath);
+  }
   backendProcess = spawn(APIPath);
   createWindow();
   autoUpdater.checkForUpdatesAndNotify();
