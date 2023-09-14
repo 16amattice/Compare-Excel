@@ -31,6 +31,12 @@ jobs:
           name: Install Dependencies
           command: npm install
       - run:
+          name: Build Dependencies
+          command: npm run build
+      - run:
+          name: Build React
+          command: npm run build:react
+      - run:
           name: Build Application
           command: npm run dist
       - run:
