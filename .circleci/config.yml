@@ -13,6 +13,9 @@ jobs:
             - "bd:4e:ad:49:2d:56:b3:60:6f:ab:2a:09:bb:c4:4f:82"
       - checkout
       - run:
+          name: Install .NET 6.0 SDK
+          command: choco install dotnet-sdk --version 6.0.100
+      - run:
           name: Build Backend API
           command: |
             cd CompareExcelAPI
@@ -21,6 +24,12 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm install
+      - run:
+          name: Build Dependencies
+          command: npm run build
+      - run:
+          name: Build React
+          command: npm run build:react
       - run:
           name: Build Application
           command: npm run dist
