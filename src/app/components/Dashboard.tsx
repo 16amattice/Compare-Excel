@@ -1,11 +1,15 @@
 import * as React from 'react';
 import './Dashboard.scss';
+import MainPage from './main-page/MainPage';
+
 
 const Dashboard: React.FC = () => {
   const [file1, setFile1] = React.useState<File | null>(null);
   const [file2, setFile2] = React.useState<File | null>(null);
   const [file1Data, setFile1Data] = React.useState<any | null>(null);
   const [file2Data, setFile2Data] = React.useState<any | null>(null);
+  const [isCompared, setIsCompared] = React.useState(false);
+
 
   const handleFileUpload = async (file: File, setData: React.Dispatch<React.SetStateAction<any>>) => {
     const formData = new FormData();
@@ -17,9 +21,10 @@ const Dashboard: React.FC = () => {
         body: formData
       });
       const data = await response.json();
+      console.log('Received Data:', data)
 
       if (response.ok) {
-        setData(data);
+        setData(data.sheets);
       } else {
         alert('Error uploading file: ' + data.message);
       }
@@ -41,26 +46,20 @@ const Dashboard: React.FC = () => {
       alert('Please select and upload both Excel files before comparing.');
       return;
     }
-    // Update UI here based on file1Data and file2Data
-  };
+    setIsCompared(true);
+};
 
-  return (
-    <div className="dashboard">
+
+return (
+  <div className="dashboard">
       <div className="file-inputs">
-        <input type="file" accept=".xlsx, .xls, .xlsm" onChange={(e) => handleFileSelect(e, setFile1, setFile1Data)} />
-        <input type="file" accept=".xlsx, .xls, .xlsm" onChange={(e) => handleFileSelect(e, setFile2, setFile2Data)} />
-        <button onClick={handleCompareClick}>Compare</button>
+          <input type="file" accept=".xlsx, .xls, .xlsm" onChange={(e) => handleFileSelect(e, setFile1, setFile1Data)} />
+          <input type="file" accept=".xlsx, .xls, .xlsm" onChange={(e) => handleFileSelect(e, setFile2, setFile2Data)} />
+          <button onClick={handleCompareClick}>Compare</button>
       </div>
-      <div className="data-grid">
-        {/* Display data from file1Data or a placeholder */}
-        <div className="data-grid-view">{file1Data ? JSON.stringify(file1Data) : 'Please compare two files to populate grid.'}</div>
-      </div>
-      <div className="data-grid">
-        {/* Display data from file2Data or a placeholder */}
-        <div className="data-grid-view">{file2Data ? JSON.stringify(file1Data) : 'Please compare two files to populate grid.'}</div>
-      </div>
-    </div>
-  );
+      {isCompared && <MainPage file1Data={file1Data} file2Data={file2Data} />}
+  </div>
+);
 };
 
 export default Dashboard;

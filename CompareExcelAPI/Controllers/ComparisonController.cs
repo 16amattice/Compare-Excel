@@ -14,16 +14,15 @@ public class ComparisonController : ControllerBase
         if (file == null || file.Length == 0)
             return BadRequest("Invalid file.");
 
-        var data = ReadExcel(file);
+        var sheetsData = ReadExcel(file);
 
-        // For now, return the data read from the file
-        // You may want to store this data somewhere (like in memory cache) for further comparison
-        return Ok(data);
+        return Ok(new { sheets = sheetsData });
     }
 
-    private List<ExcelData> ReadExcel(IFormFile file)
+
+    private List<SheetData> ReadExcel(IFormFile file)
     {
-        var data = new List<ExcelData>();
+        var sheetsData = new List<SheetData>();
 
         using (var stream = file.OpenReadStream())
         {
@@ -32,6 +31,8 @@ public class ComparisonController : ControllerBase
                 foreach (var worksheet in package.Workbook.Worksheets)
                 {
                     if (worksheet.Dimension == null) continue;
+
+                    var sheetData = new SheetData { Name = worksheet.Name };
 
                     var start = worksheet.Dimension.Start;
                     var end = worksheet.Dimension.End;
@@ -45,7 +46,7 @@ public class ComparisonController : ControllerBase
                             if (!string.IsNullOrWhiteSpace(value))
                             {
                                 var cellAddress = worksheet.Cells[row, col].Address;
-                                data.Add(new ExcelData
+                                sheetData.Data.Add(new ExcelData
                                 {
                                     Worksheet = worksheet.Name,
                                     CellLocation = cellAddress,
@@ -54,10 +55,12 @@ public class ComparisonController : ControllerBase
                             }
                         }
                     }
+
+                    sheetsData.Add(sheetData);
                 }
             }
         }
 
-        return data;
+        return sheetsData;
     }
 }
