@@ -1,2 +1,9 @@
 node_modules
 .vs
+dist
+release-builds
+bin
+obj
+publish
+launch.json
+tasks.json
