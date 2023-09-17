@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './MainPage.scss';
+
 
 interface SheetData {
     name: string;

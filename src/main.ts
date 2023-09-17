@@ -18,7 +18,7 @@ let window: BrowserWindow | null;
 
 
 const createWindow = () => {
-  window = new BrowserWindow({ width: 800, height: 600 });
+  window = new BrowserWindow();
 
   window.loadURL(
     url.format({
@@ -28,6 +28,8 @@ const createWindow = () => {
     })
   );
 
+  window.maximize();
+  
   window.on("closed", () => {
     window = null;
   });
