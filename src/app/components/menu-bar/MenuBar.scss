@@ -1,0 +1,37 @@
+.custom-menu {
+    display: flex;
+    background-color: #2e2e2e;
+    padding: 5px;
+  }
+  
+  .menu-item {
+    color: #ffffff;
+    padding: 5px 15px;
+    cursor: pointer;
+    position: relative;
+  
+    &:hover {
+      background-color: #505050;
+    }
+  }
+  
+  .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #2e2e2e;
+    border: 1px solid #505050;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+  }
+  
+  .sub-menu-item {
+    padding: 5px 15px;
+    cursor: pointer;
+    color: #ffffff;
+  
+    &:hover {
+      background-color: #505050;
+    }
+  }

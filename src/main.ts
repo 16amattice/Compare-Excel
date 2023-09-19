@@ -19,7 +19,7 @@ let window: BrowserWindow | null;
 
 const createWindow = () => {
   window = new BrowserWindow();
-
+  window.setMenu(null);
   window.loadURL(
     url.format({
       pathname: path.join(__dirname, "index.html"),
@@ -29,7 +29,7 @@ const createWindow = () => {
   );
 
   window.maximize();
-  
+
   window.on("closed", () => {
     window = null;
   });
@@ -47,7 +47,7 @@ autoUpdater.on('update-available', (info: { version: any; }) => {
   }).then(response => {
     if (response.response === 0) { // If the user clicks "Yes"
       autoUpdater.downloadUpdate();
-    }else{
+    } else {
       updater.enabled = true
       updater = null
     }
