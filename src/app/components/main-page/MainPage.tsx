@@ -1,6 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import './MainPage.scss';
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import ExcelGrid from '../data-grid/ExcelGrid';
+import { ExcelData } from '../../types';
+
 
 interface SheetData {
     name: string;
@@ -10,12 +13,6 @@ interface SheetData {
 interface MainPageProps {
     file1Data: SheetData[] | null;
     file2Data: SheetData[] | null;
-}
-
-interface ExcelData {
-    Worksheet: string;
-    CellLocation: string;
-    Value: string;
 }
 
 const MainPage: React.FC<MainPageProps> = ({ file1Data = [], file2Data = [] }) => {
@@ -32,8 +29,9 @@ const MainPage: React.FC<MainPageProps> = ({ file1Data = [], file2Data = [] }) =
         if (!activeSheetData.length) {
             return <div className="workbook-data-placeholder">Please select a sheet to view data...</div>;
         }
+        console.log("Active sheet data: ", activeSheetData);
 
-        return <div className="workbook-data">{JSON.stringify(activeSheetData)}</div>;
+        return <div className="workbook-data"><ExcelGrid data={activeSheetData} /></div>;
     };
 
     const SheetListItem: React.FC<{ sheet: string }> = ({ sheet }) => (

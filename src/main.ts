@@ -2,6 +2,7 @@ const url = require("url");
 const path = require("path");
 
 import { app, BrowserWindow, dialog } from "electron";
+const { ipcMain } = require('electron');
 const log = require('electron-log');
 const { autoUpdater } = require('electron-updater');
 const { spawn } = require('child_process');
@@ -18,7 +19,13 @@ let window: BrowserWindow | null;
 
 
 const createWindow = () => {
-  window = new BrowserWindow();
+  window = new BrowserWindow({
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true
+    }
+  }
+  );
   window.setMenu(null);
   window.loadURL(
     url.format({
@@ -83,6 +90,14 @@ app.on("ready", () => {
   createWindow();
   autoUpdater.checkForUpdatesAndNotify();
 });
+
+ipcMain.on('open-dev-tools', (event) => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+      win.webContents.openDevTools();
+  }
+});
+
 
 app.on('window-all-closed', () => {
   app.quit();
