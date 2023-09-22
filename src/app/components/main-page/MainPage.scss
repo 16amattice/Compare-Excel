@@ -26,7 +26,7 @@
 
         .workbook-data {
             min-width: 600px;
-            max-height: calc(100vh - 200px);
+            height: 100%;
             overflow-y: auto;
         }
     }

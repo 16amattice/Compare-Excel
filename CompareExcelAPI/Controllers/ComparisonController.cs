@@ -48,9 +48,9 @@ public class ComparisonController : ControllerBase
                                 var cellAddress = worksheet.Cells[row, col].Address;
                                 sheetData.Data.Add(new ExcelData
                                 {
-                                    Worksheet = worksheet.Name,
-                                    CellLocation = cellAddress,
-                                    Value = value
+                                    worksheet = worksheet.Name,
+                                    cellLocation = cellAddress,
+                                    value = value
                                 });
                             }
                         }

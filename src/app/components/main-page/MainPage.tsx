@@ -27,7 +27,7 @@ const MainPage: React.FC<MainPageProps> = ({ file1Data = [], file2Data = [] }) =
         const activeSheetData = sheet ? sheet.data : [];
 
         if (!activeSheetData.length) {
-            return <div className="workbook-data-placeholder">Please select a sheet to view data...</div>;
+            return <div className="workbook-data-placeholder">Please select a sheet to view data.....</div>;
         }
         console.log("Active sheet data: ", activeSheetData);
 

@@ -16,7 +16,6 @@ const config = {
   },
   module: {
     rules: [
-      // TypeScript processing
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
@@ -24,14 +23,17 @@ const config = {
           loader: "babel-loader"
         }
       },
-      // SCSS processing
       {
         test: /\.scss$/,
         use: [
-          'style-loader',  // Inject styles into DOM
-          'css-loader',    // Translates CSS into CommonJS
-          'sass-loader'    // Compiles Sass to CSS
+          'style-loader',  
+          'css-loader',    
+          'sass-loader'    
         ]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   },

@@ -1,4 +1,6 @@
 const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 
 const config = {
   target: "electron-main",
@@ -25,7 +27,14 @@ const config = {
   node: {
     __dirname: false,
     __filename: false
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin({
+        patterns: [
+            { from: './src/preload.js', to: 'preload.js' }
+        ]
+    })
+]
 };
 
 module.exports = (env, argv) => {

@@ -1,7 +1,5 @@
-const { ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer } = require('electron');
 
-window.electronAPI = {
-    openDevTools: () => {
-        ipcRenderer.send('open-dev-tools');
-    }
-};
+contextBridge.exposeInMainWorld('electronAPI', {
+    openDevTools: () => ipcRenderer.send('open-dev-tools')
+});

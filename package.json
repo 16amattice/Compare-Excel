@@ -6,7 +6,7 @@
   "scripts": {
     "build:react": "webpack --mode development --config webpack.react.config.js",
     "build": "webpack --mode development",
-    "start": "electron ./dist/main.js",
+    "start": "npm run build && npm run build:react && electron ./dist/main.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "release": "electron-builder -p always"
@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "build": {
-    "appId": "com.16amattice.compareexcelui",
+    "appId": "com.16amattice.compareexcel",
     "productName": "Compare Excel",
     "files": [
       "dist/**/*",
@@ -53,6 +53,7 @@
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "electron": "^26.2.1",
     "electron-builder": "^24.6.4",

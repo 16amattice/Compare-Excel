@@ -9,7 +9,6 @@ const { spawn } = require('child_process');
 
 let backendProcess: { kill: () => void; };
 
-// Logging
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
@@ -22,7 +21,8 @@ const createWindow = () => {
   window = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true
+      contextIsolation: true,
+      sandbox: false
     }
   }
   );
@@ -34,9 +34,7 @@ const createWindow = () => {
       slashes: true
     })
   );
-
   window.maximize();
-
   window.on("closed", () => {
     window = null;
   });
@@ -52,7 +50,7 @@ autoUpdater.on('update-available', (info: { version: any; }) => {
     message: `A new version (${info.version}) is available. Do you want to download and install now?`,
     buttons: ['Yes', 'No']
   }).then(response => {
-    if (response.response === 0) { // If the user clicks "Yes"
+    if (response.response === 0) {
       autoUpdater.downloadUpdate();
     } else {
       updater.enabled = true
@@ -79,10 +77,8 @@ autoUpdater.on('update-downloaded', () => {
 app.on("ready", () => {
   let APIPath
   if (app.isPackaged) {
-    // In production/package mode
     APIPath = path.join(process.resourcesPath, 'CompareExcelAPI', 'publish', 'CompareExcel.exe');
   } else {
-    // In development mode
     APIPath = path.join(__dirname, '..', 'CompareExcelAPI', 'publish', 'CompareExcel.exe');
     console.log('APIPath:', APIPath);
   }
@@ -104,5 +100,5 @@ app.on('window-all-closed', () => {
 });
 
 app.on('will-quit', () => {
-  backendProcess.kill();  // Ensure the backend stops when Electron quits
+  backendProcess.kill(); 
 });

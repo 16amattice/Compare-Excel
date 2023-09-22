@@ -11,11 +11,16 @@ const MenuBar: React.FC<Props> = ({ onNew }) => {
 
   const openDevTools = () => {
     if (window.electronAPI) {
-        window.electronAPI.openDevTools();
+      try {
+          window.electronAPI.openDevTools();
+      } catch (error) {
+          console.warn('Error when trying to open DevTools:', error);
+      }
     } else {
-        alert('Not running inside Electron with preload, cannot open DevTools from here.');
+        console.warn('Not running inside Electron with preload, cannot open DevTools from here.');
     }
 }
+
 
 
   return (
@@ -45,7 +50,6 @@ const MenuBar: React.FC<Props> = ({ onNew }) => {
           </div>
         )}
       </div>
-      {/* Add more menu items as needed */}
     </div>
   );
 };
