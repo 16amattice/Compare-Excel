@@ -32,7 +32,7 @@ public class ComparisonController : ControllerBase
                 {
                     if (worksheet.Dimension == null) continue;
 
-                    var sheetData = new SheetData { Name = worksheet.Name };
+                    var sheetData = new SheetData { name = worksheet.Name };
 
                     var start = worksheet.Dimension.Start;
                     var end = worksheet.Dimension.End;
@@ -46,7 +46,7 @@ public class ComparisonController : ControllerBase
                             if (!string.IsNullOrWhiteSpace(value))
                             {
                                 var cellAddress = worksheet.Cells[row, col].Address;
-                                sheetData.Data.Add(new ExcelData
+                                sheetData.data.Add(new ExcelData
                                 {
                                     worksheet = worksheet.Name,
                                     cellLocation = cellAddress,

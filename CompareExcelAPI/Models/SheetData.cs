@@ -2,7 +2,7 @@
 {
     public class SheetData
     {
-        public string Name { get; set; }
-        public List<ExcelData> Data { get; set; } = new List<ExcelData>();
+        public string name { get; set; } = string.Empty;
+        public List<ExcelData> data { get; set; } = new List<ExcelData>();
     }
 }

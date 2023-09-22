@@ -2,8 +2,8 @@
 {
     public class ExcelData
     {
-        public string worksheet { get; set; }
-        public string cellLocation { get; set; }
-        public string value { get; set; }
+        public string worksheet { get; set; } = string.Empty;
+        public string cellLocation { get; set; } = string.Empty;
+        public string value { get; set; } = string.Empty;
     }
 }
